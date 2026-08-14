@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Register — Haven Clinic')}"></head>
+<body>
+<div class="bg-atmosphere"></div>
+<div class="auth-shell">
+  <div class="auth-panel">
+    <a class="brand" th:href="@{/}"><span class="brand-mark"></span> Haven</a>
+    <h1>Open your clinic workspace</h1>
+    <p class="sub">Optional account — use demo if you only want a quick look.</p>
+    <div th:if="${error}" class="alert alert-error" th:text="${error}"></div>
+    <div th:if="${message}" class="alert alert-ok" th:text="${message}"></div>
+    <form class="form-stack" th:action="@{/register}" method="post">
+      <div class="field"><label for="fullName">Your name</label><input id="fullName" name="fullName" required/></div>
+      <div class="field"><label for="companyName">Clinic / hospital name</label><input id="companyName" name="companyName" placeholder="Haven Family Clinic"/></div>
+      <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" required/></div>
+      <div class="field"><label for="password">Password</label><input id="password" name="password" type="password" minlength="6" required/></div>
+      <button class="btn btn-primary" type="submit">Register</button>
+    </form>
+    <div class="auth-foot">
+      Already registered? <a th:href="@{/login}">Login</a> ·
+      <a th:href="@{/demo}">Try Demo instead</a>
+    </div>
+  </div>
+</div>
+</body>
+</html>

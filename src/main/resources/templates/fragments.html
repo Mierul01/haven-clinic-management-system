@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head(title)">
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title th:text="${title}">Haven Clinic</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"/>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" th:href="@{/css/haven.css}"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+<nav th:fragment="marketing-nav" class="site-nav" id="siteNav">
+  <a class="brand" th:href="@{/}"><span class="brand-mark"></span> Haven</a>
+  <div class="nav-links">
+    <a href="#features">Features</a>
+    <a href="#pricing">Pricing</a>
+  </div>
+  <div class="nav-actions">
+    <a class="btn btn-ghost btn-sm" th:href="@{/login}">Login</a>
+    <a class="btn btn-ghost btn-sm" th:href="@{/register}">Register</a>
+    <a class="btn btn-warm btn-sm" th:href="@{/demo}">Try Demo</a>
+  </div>
+</nav>
+
+<footer th:fragment="footer" class="footer">
+  <div><strong style="color:#1c2b27">Haven</strong> — Clinic &amp; hospital care software</div>
+  <div>© 2026 Haven Clinic. Built with Java + Spring Boot.</div>
+</footer>
+
+<script th:fragment="nav-script">
+  const nav = document.getElementById('siteNav');
+  if (nav) {
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 12);
+    });
+  }
+</script>
+
+<aside th:fragment="sidebar" class="sidebar" id="sidebar">
+  <a class="brand" th:href="@{/app}"><span class="brand-mark"></span> Haven</a>
+  <nav class="side-nav">
+    <p class="nav-label">Overview</p>
+    <a th:href="@{/app}" th:classappend="${page == 'dashboard'} ? ' active'">
+      <span class="nav-ico" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M4 10.5L12 4l8 6.5V20a1 1 0 0 1-1 1h-5v-6H10v6H5a1 1 0 0 1-1-1v-9.5z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+      </span>
+      Dashboard
+    </a>
+
+    <p class="nav-label">Care</p>
+    <a th:href="@{/app/patients}" th:classappend="${page == 'patients'} ? ' active'">
+      <span class="nav-ico" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4zm0 2c-4.4 0-8 2.2-8 5v1h16v-1c0-2.8-3.6-5-8-5z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+      </span>
+      Patients
+    </a>
+    <a th:href="@{/app/appointments}" th:classappend="${page == 'appointments'} ? ' active'">
+      <span class="nav-ico" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none"><rect x="3.5" y="5" width="17" height="15" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M8 3.5V7M16 3.5V7M3.5 10h17" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </span>
+      Appointments
+    </a>
+    <a th:href="@{/app/doctors}" th:classappend="${page == 'doctors'} ? ' active'">
+      <span class="nav-ico" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.2" stroke="currentColor" stroke-width="1.6"/><path d="M5.5 19.5c1.2-3.2 3.5-4.8 6.5-4.8s5.3 1.6 6.5 4.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M18 8v4M16 10h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </span>
+      Doctors
+    </a>
+    <a th:href="@{/app/prescriptions}" th:classappend="${page == 'prescriptions'} ? ' active'">
+      <span class="nav-ico" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M8 4.5h6.5L19 9v10.5a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1v-14a1 1 0 0 1 1-1z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M14 4.5V9h4.5M9.5 13.5h5M9.5 16.5h3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </span>
+      Prescriptions
+    </a>
+
+    <p class="nav-label">Clinic</p>
+    <a th:href="@{/app/billing}" th:classappend="${page == 'billing'} ? ' active'">
+      <span class="nav-ico" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none"><rect x="4" y="5" width="16" height="14" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M4 10h16M9 14h6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </span>
+      Billing
+    </a>
+    <a th:href="@{/app/rooms}" th:classappend="${page == 'rooms'} ? ' active'">
+      <span class="nav-ico" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M4 19V7.5L12 4l8 3.5V19" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M9 19v-5h6v5M4 19h16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+      Rooms
+    </a>
+    <a th:href="@{/app/inventory}" th:classappend="${page == 'inventory'} ? ' active'">
+      <span class="nav-ico" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M4.5 8.5L12 4l7.5 4.5v7L12 20l-7.5-4.5v-7z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M4.5 8.5L12 13l7.5-4.5M12 13v7" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+      </span>
+      Inventory
+    </a>
+    <a th:href="@{/app/reports}" th:classappend="${page == 'reports'} ? ' active'">
+      <span class="nav-ico" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M5 19V10M10 19V6M15 19v-7M20 19V8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </span>
+      Reports
+    </a>
+
+    <p class="nav-label">Session</p>
+    <button type="button" class="nav-signout" data-logout-trigger>
+      <span class="nav-ico" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M10 5H6.5A1.5 1.5 0 0 0 5 6.5v11A1.5 1.5 0 0 0 6.5 19H10M14 16l4-4-4-4M18 12H10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+      Sign out
+    </button>
+  </nav>
+
+  <div class="side-foot">
+    <a class="user-chip user-chip-link" th:href="@{/app/settings}" th:classappend="${page == 'settings'} ? ' active'" th:if="${currentUser != null}">
+      <span class="user-avatar" th:text="${#strings.substring(currentUser.fullName,0,1)}">D</span>
+      <span class="user-meta">
+        <strong th:text="${currentUser.fullName}">User</strong>
+        <span th:text="${currentUser.companyName}">Clinic</span>
+      </span>
+    </a>
+  </div>
+
+  <form id="logoutForm" th:action="@{/logout}" method="post" class="logout-form-hidden"></form>
+  <script>
+    (function () {
+      function askLogout() {
+        if (typeof Swal === 'undefined') {
+          if (confirm('Sign out now?')) document.getElementById('logoutForm').submit();
+          return;
+        }
+        Swal.fire({
+          title: 'Sign out?',
+          text: 'You will need to sign in again to use Haven.',
+          icon: 'question',
+          showCancelButton: true,
+          confirmButtonText: 'Sign out',
+          cancelButtonText: 'Cancel',
+          confirmButtonColor: '#3d8f7a',
+          cancelButtonColor: '#8aa099',
+          reverseButtons: true
+        }).then(function (result) {
+          if (result.isConfirmed) {
+            document.getElementById('logoutForm').submit();
+          }
+        });
+      }
+      document.querySelectorAll('[data-logout-trigger]').forEach(function (el) {
+        el.addEventListener('click', askLogout);
+      });
+    })();
+  </script>
+</aside>
+</body>
+</html>

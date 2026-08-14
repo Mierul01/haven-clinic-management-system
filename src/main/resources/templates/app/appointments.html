@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Appointments — Haven')}"></head>
+<body>
+<div class="bg-atmosphere"></div>
+<div class="app-shell">
+  <div th:replace="~{fragments :: sidebar}"></div>
+  <main class="app-main">
+    <div class="app-top">
+      <div>
+        <button class="mobile-toggle" type="button" onclick="document.getElementById('sidebar').classList.toggle('open')">Menu</button>
+        <h1>Appointments</h1>
+        <p>Keep the day’s visits clear and kind.</p>
+      </div>
+    </div>
+    <div th:if="${message}" class="alert alert-ok" th:text="${message}"></div>
+    <section class="panel" style="margin-bottom:1rem">
+      <div class="panel-head"><h2>Book appointment</h2></div>
+      <div class="panel-body">
+        <form class="form-inline" th:action="@{/app/appointments}" method="post">
+          <div class="field"><label>Reason</label><input name="reason" required placeholder="General checkup"/></div>
+          <div class="field"><label>Patient</label>
+            <select name="patientId"><option value="">—</option><option th:each="p : ${patients}" th:value="${p.id}" th:text="${p.fullName}"></option></select>
+          </div>
+          <div class="field"><label>Doctor</label>
+            <select name="doctorId"><option value="">—</option><option th:each="d : ${doctors}" th:value="${d.id}" th:text="${d.fullName}"></option></select>
+          </div>
+          <div class="field"><label>Date</label><input name="appointmentDate" type="date"/></div>
+          <div class="field"><label>Time</label><input name="appointmentTime" type="time"/></div>
+          <button class="btn btn-primary" type="submit">Book</button>
+        </form>
+      </div>
+    </section>
+    <section class="panel">
+      <div class="panel-head"><h2>Schedule</h2></div>
+      <div class="panel-body">
+        <table>
+          <thead><tr><th>When</th><th>Patient</th><th>Doctor</th><th>Reason</th><th>Status</th><th></th></tr></thead>
+          <tbody>
+            <tr th:each="a : ${appointments}">
+              <td th:text="${a.appointmentDate + ' ' + a.appointmentTime}">When</td>
+              <td th:text="${a.patient != null ? a.patient.fullName : '—'}">Patient</td>
+              <td th:text="${a.doctor != null ? a.doctor.fullName : '—'}">Doctor</td>
+              <td th:text="${a.reason}">Reason</td>
+              <td>
+                <form th:action="@{/app/appointments/status}" method="post">
+                  <input type="hidden" name="id" th:value="${a.id}"/>
+                  <select name="status" onchange="this.form.submit()">
+                    <option value="SCHEDULED" th:selected="${a.status=='SCHEDULED'}">Scheduled</option>
+                    <option value="CHECKED_IN" th:selected="${a.status=='CHECKED_IN'}">Check In</option>
+                    <option value="COMPLETED" th:selected="${a.status=='COMPLETED'}">Completed</option>
+                    <option value="CANCELLED" th:selected="${a.status=='CANCELLED'}">Cancelled</option>
+                  </select>
+                </form>
+              </td>
+              <td>
+                <form th:action="@{/app/appointments/delete}" method="post">
+                  <input type="hidden" name="id" th:value="${a.id}"/>
+                  <button class="btn btn-danger btn-sm" type="submit">Remove</button>
+                </form>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="empty" th:if="${#lists.isEmpty(appointments)}">No appointments yet.</p>
+      </div>
+    </section>
+  </main>
+</div>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Prescriptions — Haven')}"></head>
+<body>
+<div class="bg-atmosphere"></div>
+<div class="app-shell">
+  <div th:replace="~{fragments :: sidebar}"></div>
+  <main class="app-main">
+    <div class="app-top">
+      <div>
+        <button class="mobile-toggle" type="button" onclick="document.getElementById('sidebar').classList.toggle('open')">Menu</button>
+        <h1>Prescriptions</h1>
+        <p>Clear medication guidance for patients.</p>
+      </div>
+    </div>
+    <div th:if="${message}" class="alert alert-ok" th:text="${message}"></div>
+    <section class="panel" style="margin-bottom:1rem">
+      <div class="panel-head"><h2>New prescription</h2></div>
+      <div class="panel-body">
+        <form class="form-inline" th:action="@{/app/prescriptions}" method="post">
+          <div class="field"><label>Medication</label><input name="medication" required/></div>
+          <div class="field"><label>Dosage</label><input name="dosage" placeholder="500mg"/></div>
+          <div class="field"><label>Instructions</label><input name="instructions" placeholder="After meals"/></div>
+          <div class="field"><label>Patient</label>
+            <select name="patientId"><option value="">—</option><option th:each="p : ${patients}" th:value="${p.id}" th:text="${p.fullName}"></option></select>
+          </div>
+          <div class="field"><label>Doctor</label>
+            <select name="doctorId"><option value="">—</option><option th:each="d : ${doctors}" th:value="${d.id}" th:text="${d.fullName}"></option></select>
+          </div>
+          <button class="btn btn-primary" type="submit">Save</button>
+        </form>
+      </div>
+    </section>
+    <section class="panel">
+      <div class="panel-head"><h2>Prescription list</h2></div>
+      <div class="panel-body">
+        <table>
+          <thead><tr><th>Medication</th><th>Patient</th><th>Doctor</th><th>Dosage</th><th>Status</th><th></th></tr></thead>
+          <tbody>
+            <tr th:each="rx : ${prescriptions}">
+              <td th:text="${rx.medication}">Med</td>
+              <td th:text="${rx.patient != null ? rx.patient.fullName : '—'}">Patient</td>
+              <td th:text="${rx.doctor != null ? rx.doctor.fullName : '—'}">Doctor</td>
+              <td th:text="${rx.dosage}">Dose</td>
+              <td><span class="badge" th:classappend="' badge-' + ${#strings.toLowerCase(rx.status)}" th:text="${#strings.replace(rx.status, '_', ' ')}">Active</span></td>
+              <td>
+                <form th:action="@{/app/prescriptions/delete}" method="post">
+                  <input type="hidden" name="id" th:value="${rx.id}"/>
+                  <button class="btn btn-danger btn-sm" type="submit">Remove</button>
+                </form>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="empty" th:if="${#lists.isEmpty(prescriptions)}">No prescriptions yet.</p>
+      </div>
+    </section>
+  </main>
+</div>
+</body>
+</html>

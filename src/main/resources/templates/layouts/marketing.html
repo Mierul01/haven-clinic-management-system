@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title th:text="${pageTitle} ?: 'Fluxa'">Fluxa</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"/>
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" th:href="@{/css/fluxa.css}"/>
+</head>
+<body>
+<div class="bg-atmosphere"></div>
+<nav class="site-nav" id="siteNav">
+  <a class="brand" th:href="@{/}"><span class="brand-mark"></span> Fluxa</a>
+  <div class="nav-links">
+    <a th:href="@{/features}">Features</a>
+    <a th:href="@{/pricing}">Pricing</a>
+  </div>
+  <div class="nav-actions">
+    <a class="btn btn-ghost btn-sm" th:href="@{/login}">Login</a>
+    <a class="btn btn-primary btn-sm" th:href="@{/register}">Register</a>
+    <a class="btn btn-lime btn-sm" th:href="@{/demo}">Try Demo</a>
+  </div>
+</nav>
+<div th:replace="~{::content}">Content</div>
+<footer class="footer">
+  <div><strong style="color:#e7f4ef">Fluxa</strong> — Business OS for freelancers &amp; small teams</div>
+  <div>© 2026 Fluxa. Built with Java + Spring Boot.</div>
+</footer>
+<script>
+  const nav = document.getElementById('siteNav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 12);
+  });
+</script>
+</body>
+</html>

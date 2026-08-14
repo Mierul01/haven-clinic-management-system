@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Dashboard — Haven')}"></head>
+<body>
+<div class="bg-atmosphere"></div>
+<div class="app-shell">
+  <div th:replace="~{fragments :: sidebar}"></div>
+  <main class="app-main">
+    <div class="app-top">
+      <div>
+        <button class="mobile-toggle" type="button" onclick="document.getElementById('sidebar').classList.toggle('open')">Menu</button>
+        <h1>Good care starts here</h1>
+        <p th:text="'Welcome, ' + ${currentUser.fullName} + ' · ' + ${currentUser.companyName}">Welcome</p>
+      </div>
+      <a class="btn btn-primary btn-sm" th:href="@{/app/appointments}">Book appointment</a>
+    </div>
+
+    <div class="welcome-note">
+      <p><strong>Today’s focus:</strong> keep the waiting room calm — check in arrivals, free occupied rooms, and clear overdue bills.</p>
+    </div>
+
+    <div th:if="${message}" class="alert alert-ok" th:text="${message}"></div>
+
+    <div class="stat-row">
+      <div class="stat"><div class="label">Today’s visits</div><div class="value" th:text="${todayAppointments}">0</div></div>
+      <div class="stat"><div class="label">Patients</div><div class="value" th:text="${patientCount}">0</div></div>
+      <div class="stat"><div class="label">Available rooms</div><div class="value" th:text="${availableRooms}">0</div></div>
+      <div class="stat"><div class="label">Outstanding</div><div class="value" th:text="'$' + ${#numbers.formatDecimal(outstandingTotal, 1, 0)}">$0</div></div>
+    </div>
+
+    <div class="grid-2">
+      <section class="panel">
+        <div class="panel-head"><h2>Recent appointments</h2><a th:href="@{/app/appointments}">View all</a></div>
+        <div class="panel-body">
+          <table>
+            <thead><tr><th>Patient</th><th>Doctor</th><th>When</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr th:each="a : ${recentAppointments}">
+                <td th:text="${a.patient != null ? a.patient.fullName : '—'}">Patient</td>
+                <td th:text="${a.doctor != null ? a.doctor.fullName : '—'}">Doctor</td>
+                <td th:text="${a.appointmentDate + ' ' + a.appointmentTime}">When</td>
+                <td><span class="badge" th:classappend="' badge-' + ${#strings.toLowerCase(a.status)}" th:text="${#strings.replace(a.status, '_', ' ')}">Scheduled</span></td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="empty" th:if="${#lists.isEmpty(recentAppointments)}">No appointments yet.</p>
+        </div>
+      </section>
+      <section class="panel">
+        <div class="panel-head"><h2>Care pulse</h2><a th:href="@{/app/patients}">Patients</a></div>
+        <div class="panel-body">
+          <div class="stat-row" style="grid-template-columns:repeat(3,1fr);margin:0 0 1rem">
+            <div class="stat"><div class="label">Scheduled</div><div class="value" th:text="${scheduledCount}">0</div></div>
+            <div class="stat"><div class="label">Checked in</div><div class="value" th:text="${checkedInCount}">0</div></div>
+            <div class="stat"><div class="label">Completed</div><div class="value" th:text="${completedCount}">0</div></div>
+          </div>
+          <table>
+            <thead><tr><th>Patient</th><th>Age</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr th:each="p : ${recentPatients}">
+                <td th:text="${p.fullName}">Name</td>
+                <td th:text="${p.age}">0</td>
+                <td><span class="badge" th:classappend="' badge-' + ${#strings.toLowerCase(p.status)}" th:text="${#strings.replace(p.status, '_', ' ')}">Active</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+</body>
+</html>

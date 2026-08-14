@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Pricing — Haven Clinic')}"></head>
+<body>
+<div class="bg-atmosphere"></div>
+<div th:replace="~{fragments :: marketing-nav}"></div>
+<section class="section" style="padding-top:4rem">
+  <div class="section-head">
+    <h2>Simple clinic pricing.</h2>
+    <p>Sell these plans on your website. Connect payments later when you’re ready.</p>
+  </div>
+  <div class="pricing-grid">
+    <div class="price-plan">
+      <h3>Solo Clinic</h3>
+      <p class="price">$0 <span>/mo</span></p>
+      <ul>
+        <li>Full demo workspace</li>
+        <li>Patients &amp; appointments</li>
+        <li>1 clinic profile</li>
+      </ul>
+      <a class="btn btn-ghost" th:href="@{/demo}">Try free</a>
+    </div>
+    <div class="price-plan featured">
+      <h3>Practice</h3>
+      <p class="price">$49 <span>/mo</span></p>
+      <ul>
+        <li>Doctors &amp; prescriptions</li>
+        <li>Billing + rooms</li>
+        <li>Inventory tracking</li>
+        <li>Reports</li>
+      </ul>
+      <a class="btn btn-primary" th:href="@{/register}">Start Practice</a>
+    </div>
+    <div class="price-plan">
+      <h3>Hospital Wing</h3>
+      <p class="price">$129 <span>/mo</span></p>
+      <ul>
+        <li>Everything in Practice</li>
+        <li>Multi-ward ready story</li>
+        <li>Custom branding</li>
+        <li>Priority support story</li>
+      </ul>
+      <a class="btn btn-ghost" th:href="@{/register}">Register</a>
+    </div>
+  </div>
+</section>
+<div th:replace="~{fragments :: footer}"></div>
+<script th:replace="~{fragments :: nav-script}"></script>
+</body>
+</html>

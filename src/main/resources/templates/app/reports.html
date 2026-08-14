@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Reports — Haven')}"></head>
+<body>
+<div class="bg-atmosphere"></div>
+<div class="app-shell">
+  <div th:replace="~{fragments :: sidebar}"></div>
+  <main class="app-main">
+    <div class="app-top">
+      <div>
+        <button class="mobile-toggle" type="button" onclick="document.getElementById('sidebar').classList.toggle('open')">Menu</button>
+        <h1>Reports</h1>
+        <p>A soft snapshot of clinic activity.</p>
+      </div>
+    </div>
+    <div class="stat-row">
+      <div class="stat"><div class="label">Patients</div><div class="value" th:text="${patientCount}">0</div></div>
+      <div class="stat"><div class="label">Doctors</div><div class="value" th:text="${doctorCount}">0</div></div>
+      <div class="stat"><div class="label">Active Rx</div><div class="value" th:text="${activePrescriptions}">0</div></div>
+      <div class="stat"><div class="label">Supplies</div><div class="value" th:text="${supplyCount}">0</div></div>
+    </div>
+    <div class="grid-2">
+      <section class="panel">
+        <div class="panel-head"><h2>Visits</h2></div>
+        <div class="panel-body">
+          <table>
+            <tr><td>Today</td><td th:text="${todayAppointments}">0</td></tr>
+            <tr><td>Scheduled</td><td th:text="${scheduledCount}">0</td></tr>
+            <tr><td>Checked in</td><td th:text="${checkedInCount}">0</td></tr>
+            <tr><td>Completed</td><td th:text="${completedCount}">0</td></tr>
+          </table>
+        </div>
+      </section>
+      <section class="panel">
+        <div class="panel-head"><h2>Operations</h2></div>
+        <div class="panel-body">
+          <table>
+            <tr><td>Available rooms</td><td th:text="${availableRooms}">0</td></tr>
+            <tr><td>Occupied rooms</td><td th:text="${occupiedRooms}">0</td></tr>
+            <tr><td>Paid billing</td><td th:text="'$' + ${paidTotal}">$0</td></tr>
+            <tr><td>Outstanding</td><td th:text="'$' + ${outstandingTotal}">$0</td></tr>
+          </table>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+</body>
+</html>

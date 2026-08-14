@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Features — Haven Clinic')}"></head>
+<body>
+<div class="bg-atmosphere"></div>
+<div th:replace="~{fragments :: marketing-nav}"></div>
+<section class="section" style="padding-top:4rem">
+  <div class="section-head">
+    <h2>Everything a small clinic needs.</h2>
+    <p>Ten practical menus — ready to demo, customize, and sell as hospital/clinic software.</p>
+  </div>
+  <div class="feature-rail">
+    <article class="feature-item"><h3>Dashboard</h3><p>Today’s appointments, room status, and billing pulse.</p></article>
+    <article class="feature-item"><h3>Patients</h3><p>Age, blood type, allergies, and visit status in one place.</p></article>
+    <article class="feature-item"><h3>Appointments</h3><p>Schedule, check in, complete, or cancel visits.</p></article>
+    <article class="feature-item"><h3>Doctors</h3><p>Manage specialties and availability.</p></article>
+    <article class="feature-item"><h3>Prescriptions</h3><p>Medication, dosage, and care instructions.</p></article>
+    <article class="feature-item"><h3>Billing</h3><p>Patient bills with pending, paid, and overdue states.</p></article>
+    <article class="feature-item"><h3>Rooms</h3><p>Consultation rooms, wards, ICU, and lab status.</p></article>
+    <article class="feature-item"><h3>Inventory</h3><p>Masks, gloves, pharmacy stock, and reorder levels.</p></article>
+    <article class="feature-item"><h3>Reports &amp; Settings</h3><p>Clinic snapshot and profile for your brand.</p></article>
+  </div>
+  <div class="hero-cta" style="margin-top:2rem">
+    <a class="btn btn-warm" th:href="@{/demo}">Open the clinic demo</a>
+  </div>
+</section>
+<div th:replace="~{fragments :: footer}"></div>
+<script th:replace="~{fragments :: nav-script}"></script>
+</body>
+</html>

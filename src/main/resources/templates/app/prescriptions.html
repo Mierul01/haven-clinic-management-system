@@ -5,10 +5,11 @@
 <div class="bg-atmosphere"></div>
 <div class="app-shell">
   <div th:replace="~{fragments :: sidebar}"></div>
-  <main class="app-main">
+  <div class="app-column">
+    <div th:replace="~{fragments :: topbar}"></div>
+    <main class="app-main">
     <div class="app-top">
       <div>
-        <button class="mobile-toggle" type="button" onclick="document.getElementById('sidebar').classList.toggle('open')">Menu</button>
         <h1>Prescriptions</h1>
         <p>Clear medication guidance for patients.</p>
       </div>
@@ -56,6 +57,7 @@
       </div>
     </section>
   </main>
+  </div>
 </div>
 </body>
 </html>

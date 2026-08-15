@@ -5,10 +5,11 @@
 <div class="bg-atmosphere"></div>
 <div class="app-shell">
   <div th:replace="~{fragments :: sidebar}"></div>
-  <main class="app-main">
+  <div class="app-column">
+    <div th:replace="~{fragments :: topbar}"></div>
+    <main class="app-main">
     <div class="app-top">
       <div>
-        <button class="mobile-toggle" type="button" onclick="document.getElementById('sidebar').classList.toggle('open')">Menu</button>
         <h1>Profile</h1>
         <p>Manage how your clinic appears in Haven.</p>
       </div>
@@ -66,6 +67,7 @@
       <button type="button" class="btn btn-danger" data-logout-trigger>Sign out</button>
     </section>
   </main>
+  </div>
 </div>
 </body>
 </html>

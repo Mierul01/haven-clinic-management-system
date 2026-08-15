@@ -5,18 +5,19 @@
 <div class="bg-atmosphere"></div>
 <div class="app-shell">
   <div th:replace="~{fragments :: sidebar}"></div>
-  <main class="app-main">
+  <div class="app-column">
+    <div th:replace="~{fragments :: topbar}"></div>
+    <main class="app-main">
     <div class="app-top">
       <div>
-        <button class="mobile-toggle" type="button" onclick="document.getElementById('sidebar').classList.toggle('open')">Menu</button>
         <h1>Billing</h1>
         <p>Next bill: <span th:text="${nextNumber}">BILL-0001</span></p>
       </div>
     </div>
     <div th:if="${message}" class="alert alert-ok" th:text="${message}"></div>
     <div class="stat-row" style="grid-template-columns:repeat(2,1fr)">
-      <div class="stat"><div class="label">Paid</div><div class="value" th:text="'$' + ${#numbers.formatDecimal(paidTotal, 1, 0)}">$0</div></div>
-      <div class="stat"><div class="label">Outstanding</div><div class="value" th:text="'$' + ${#numbers.formatDecimal(outstandingTotal, 1, 0)}">$0</div></div>
+      <div class="stat"><div class="label">Paid</div><div class="value" th:text="'RM ' + ${#numbers.formatDecimal(paidTotal, 1, 0)}">RM 0</div></div>
+      <div class="stat"><div class="label">Outstanding</div><div class="value" th:text="'RM ' + ${#numbers.formatDecimal(outstandingTotal, 1, 0)}">RM 0</div></div>
     </div>
     <section class="panel" style="margin-bottom:1rem">
       <div class="panel-head"><h2>Create bill</h2></div>
@@ -48,7 +49,7 @@
               <td th:text="${b.number}">BILL</td>
               <td th:text="${b.patient != null ? b.patient.fullName : '—'}">Patient</td>
               <td th:text="${b.description}">Desc</td>
-              <td th:text="'$' + ${b.amount}">$0</td>
+              <td th:text="'RM ' + ${b.amount}">RM 0</td>
               <td>
                 <form th:action="@{/app/billing/status}" method="post">
                   <input type="hidden" name="id" th:value="${b.id}"/>
@@ -72,6 +73,7 @@
       </div>
     </section>
   </main>
+  </div>
 </div>
 </body>
 </html>

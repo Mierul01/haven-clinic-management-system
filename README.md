@@ -1,122 +1,107 @@
 # Haven Clinic Management System
 
-**Haven** is a complete clinic/hospital management SaaS built with **Java + Spring Boot**.  
-It includes a public marketing website, optional login/register, one-click demo access, and a full clinic workspace for day-to-day care operations.
+**Haven** is a clinic and hospital management SaaS built with **Java** and **Spring Boot**.
 
-Live local URL (after running): [http://localhost:8088](http://localhost:8088)
+It gives a small clinic one workspace for the work that happens every day: patients, appointments, doctors, prescriptions, billing, rooms, inventory, and reports. Visitors can browse a public website, try a one-click demo, or register their own clinic account.
 
----
-
-## What Haven Does
-
-Haven helps small clinics and hospital wings manage:
-
-- Patient records
-- Doctor roster
-- Appointment scheduling and check-in
-- Prescriptions
-- Billing
-- Room availability
-- Medical inventory/stock
-- Simple clinic reports
-- User profile and sign-out
-
-It is designed as a **sellable SaaS product**: visitors can try the demo without signing up, or register for their own clinic workspace.
+Local URL after you start the app: [http://localhost:8088](http://localhost:8088)
 
 ---
 
-## Public Website (Marketing)
+## Dashboard preview
+
+This is the clinic workspace after login. The layout is built around a calm forest-green palette, a slim icon rail, and rounded cards so staff can see today’s work at a glance.
+
+![Haven Clinic dashboard](docs/dashboard.png)
+
+**How to read this screen**
+
+| Area | What it does |
+|------|----------------|
+| **Left icon rail** | Quick jump to Dashboard, Patients, Appointments, Doctors, Prescriptions, Billing, Rooms, Inventory, Reports, Profile, and Sign out |
+| **Top bar** | Haven logo, main links (Dashboard, Patients, Appointments, Billing, Reports), and the signed-in user avatar |
+| **Welcome header** | Greets the doctor and names the clinic. **Book appointment** is the primary action |
+| **Today’s appointments card** | Large green card with today’s visit count and shortcuts to the schedule and patient list |
+| **Care pulse** | Bar chart of **Scheduled**, **Checked in**, and **Completed** visits |
+| **Stat cards** | Patients, available rooms, outstanding billing, and visits today |
+| **Recent appointments** | Latest visits with patient, doctor, time, and status badges |
+| **Recent patients** | Newest people under care, with age and status |
+
+The screenshot above is the live demo clinic using seeded sample data. After this update, the demo clinic is **Klinik Haven Kajang** with Malaysian patient and doctor names.
+
+---
+
+## Why this system exists
+
+Front-desk and clinical staff usually juggle paper lists, WhatsApp chats, and separate spreadsheets. Haven puts those pieces in one product:
+
+1. **Public site** — explain the product, show pricing, and let people try it.
+2. **Secure workspace** — each clinic account only sees its own patients, bills, rooms, and stock.
+3. **Day-to-day operations** — book a visit, check a patient in, write a prescription, raise a bill, free a room, restock supplies.
+
+It is meant as a complete starter you can demo, host, or customize for a real clinic.
+
+---
+
+## How the product is organized
+
+### 1. Public website (no login)
+
+Anyone can open the marketing site first.
 
 | Page | Purpose |
 |------|---------|
-| **Landing** | Brand intro, CTAs (Try Demo / Register / Login), features overview, pricing |
-| **Features** | Extra product details |
-| **Pricing** | Solo / Practice / Hospital Wing plans |
-| **Login** | Sign in to an existing account |
-| **Register** | Create a new clinic account (optional) |
-| **Try Demo** | Instant access — no signup required |
+| **Landing** | Brand intro, Try Demo / Register / Login, features, and pricing |
+| **Features** | Longer product explanation |
+| **Pricing** | Solo, Practice, and Hospital Wing plans |
+| **Login** | Sign in to an existing clinic |
+| **Register** | Create a new clinic account |
+| **Try Demo** | Instant workspace — no signup |
+
+### 2. Clinic workspace (after login or demo)
+
+Every clinic gets its own data. Modules:
+
+#### Dashboard
+Today’s snapshot: visit count, patient total, free rooms, outstanding money, recent appointments, recent patients, and care pulse (Scheduled / Check In / Completed).
+
+#### Patients
+People under care. Add name, age, gender, phone, blood type, and allergies. View status and remove records when needed.
+
+#### Appointments
+Daily visit board. Book a reason, patient, doctor, date, and time. Move status through **Scheduled → Check In → Completed**, or **Cancelled**.
+
+#### Doctors
+Care team roster. Add specialty, phone, and email. Mark **Active** or **On Leave**.
+
+#### Prescriptions
+Medication records linked to a patient and doctor: drug name, dosage, and instructions.
+
+#### Billing
+Patient invoices with auto numbers (`BILL-0001`, …). Status: **Pending**, **Paid**, **Overdue**. Dashboard and reports show paid vs outstanding totals.
+
+#### Rooms
+Facility board for Consultation, Ward, ICU, and Lab rooms. Track capacity and **Available / Occupied / Maintenance**.
+
+#### Inventory
+Clinic stock (PPE, Pharmacy, First Aid, Lab, Other). Quantity plus reorder level, with a low-stock warning when you drop to/below the reorder point.
+
+#### Reports
+Simple operations snapshot: counts for patients, doctors, prescriptions, supplies, visits by status, room occupancy, and billing totals.
+
+#### Profile
+Open from the avatar (not a main menu item). Edit your name and clinic name, then sign out with a confirmation dialog.
 
 ---
 
-## App Modules (Workspace)
+## Authentication
 
-After login or demo entry, users get a sidebar workspace with these functions:
-
-### 1. Dashboard
-Clinic overview at a glance:
-- Today’s appointment count
-- Total patients
-- Available rooms
-- Outstanding billing amount
-- Recent appointments and patient list
-- Care pulse (Scheduled / Check In / Completed)
-
-### 2. Patients
-Manage people under clinic care:
-- Add patient (name, age, gender, phone, blood type, allergies)
-- View patient list and status
-- Remove patients
-
-### 3. Appointments
-Daily visit scheduling:
-- Book appointment (reason, patient, doctor, date, time)
-- Update status: **Scheduled**, **Check In**, **Completed**, **Cancelled**
-- Remove appointments
-
-### 4. Doctors
-Care team management:
-- Add doctor (name, specialty, phone, email)
-- Set status: **Active** or **On Leave**
-- View roster and remove doctors
-
-### 5. Prescriptions
-Medication records:
-- Create prescription (medication, dosage, instructions)
-- Link to patient and doctor
-- View/remove prescription history
-
-### 6. Billing
-Patient billing:
-- Create bills with auto number (`BILL-0001`, …)
-- Link bill to patient
-- Status: **Pending**, **Paid**, **Overdue**
-- See paid vs outstanding totals
-
-### 7. Rooms
-Facility board:
-- Add rooms (Consultation, Ward, ICU, Lab)
-- Capacity tracking
-- Status: **Available**, **Occupied**, **Maintenance**
-
-### 8. Inventory
-Clinic supplies/stock:
-- Add items (PPE, Pharmacy, First Aid, Lab, Other)
-- Quantity + reorder level
-- Low-stock warning when quantity is at/below reorder level
-
-### 9. Reports
-Simple operations snapshot:
-- Patients, doctors, active prescriptions, supplies
-- Visit counts by status
-- Room occupancy
-- Paid vs outstanding billing
-
-### 10. Profile (via name click)
-Not in the main menu — open by clicking the user name in the sidebar footer:
-- View profile hero (name, clinic, email, plan)
-- Edit name and clinic name
-- Sign out (with SweetAlert confirmation)
-
----
-
-## Authentication & Access
-
-| Method | How it works |
+| Method | What happens |
 |--------|----------------|
-| **Try Demo** | One click → enters seeded demo clinic workspace |
-| **Register** | Creates a new account, then user signs in |
-| **Login** | Email + password |
-| **Sign out** | Sidebar “Sign out” or Profile page → SweetAlert confirm → logout |
+| **Try Demo** | One click into the seeded demo clinic |
+| **Register** | Creates a new clinic account, then you sign in |
+| **Login** | Email + password, session-based |
+| **Sign out** | Confirm with SweetAlert, then the session ends |
 
 ### Demo account
 
@@ -124,43 +109,56 @@ Not in the main menu — open by clicking the user name in the sidebar footer:
 - **Password:** `demo1234`
 - Or click **Try Demo** on the landing page
 
-Demo data includes sample patients, doctors, appointments, prescriptions, bills, rooms, and inventory.
+Demo data is a Malaysian clinic (**Klinik Haven Kajang**) with Malay, Chinese Malaysian, and Indian Malaysian sample patients and doctors. Billing uses **RM**.
+
+### Demo people
+
+| Role | Name |
+|------|------|
+| Clinic owner | Ahmad Faizal |
+| Doctors | Dr. Ahmad Faizal, Dr. Nur Aisyah Kamal, Dr. Kavitha Rajendran |
+| Patients | Siti Aminah binti Osman, Tan Wei Ming, Nur Qalesya binti Hafiz, Rajan a/l Muthusamy |
 
 ---
 
-## Tech Stack
+## Tech stack
 
 | Layer | Technology |
 |-------|------------|
 | Language | Java 17 |
-| Framework | Spring Boot 3 |
+| Framework | Spring Boot 3.3 |
 | Security | Spring Security (form login + session) |
-| UI | Thymeleaf + custom CSS |
-| Database | H2 (file-based, auto-created) |
+| UI | Thymeleaf templates + custom CSS (`haven.css`) |
+| Database | H2 file database (`./data/haven`) |
 | ORM | Spring Data JPA / Hibernate |
 | Build | Maven |
 
+Each logged-in user owns their clinic records. The seeder only fills the demo account so a new registration starts empty.
+
 ---
 
-## How to Run
+## How to run
 
 ### Requirements
-- JDK 17+
-- Maven 3.9+ (or use the local Maven under `.tools/` if present)
 
-### Start the app
+- JDK 17+
+- Maven 3.9+ (or the bundled Maven under `.tools/` if present)
+
+### Start
 
 ```bash
 mvn spring-boot:run
 ```
 
-Windows (if using the bundled Maven):
+Windows, using bundled Maven:
 
 ```bash
 .\.tools\maven\apache-maven-3.9.16\bin\mvn.cmd spring-boot:run
 ```
 
-Then open: **http://localhost:8088**
+Open **http://localhost:8088**
+
+The app listens on **port 8088** (not 8080).
 
 ### Useful paths
 
@@ -171,11 +169,11 @@ Then open: **http://localhost:8088**
 | `/login` | Login |
 | `/register` | Register |
 | `/app` | Dashboard (after auth) |
-| `/h2-console` | H2 database console (dev) |
+| `/h2-console` | H2 database console (development) |
 
 ---
 
-## Project Structure
+## Project structure
 
 ```
 src/main/java/com/fluxa/
@@ -183,27 +181,31 @@ src/main/java/com/fluxa/
   model/           # Patient, Doctor, Appointment, Bill, Room, etc.
   repository/      # JPA repositories
   security/        # Spring Security + user details
-  service/         # Business logic
-  web/             # Controllers (marketing + app)
+  service/         # Clinic workspace logic
+  web/             # Marketing + app controllers
 
 src/main/resources/
   static/css/      # Haven UI styles
-  templates/       # Landing + app pages
+  templates/       # Landing + workspace pages
   application.properties
+
+docs/
+  dashboard.png    # README screenshot
 ```
 
 ---
 
-## Selling / Customizing
+## Selling / customizing
 
 Haven is structured so you can:
-1. Rebrand colors/fonts in `static/css/haven.css`
+
+1. Rebrand colors and fonts in `src/main/resources/static/css/haven.css`
 2. Host on a VPS, Railway, Render, or similar
-3. Point your website CTAs to `/demo`, `/register`, or pricing
-4. Later upgrade H2 → PostgreSQL and add real payment (Stripe) on pricing plans
+3. Point website CTAs to `/demo`, `/register`, or pricing
+4. Later swap H2 for PostgreSQL and add real payment (Stripe) on the pricing plans
 
 ---
 
-## License / Ownership
+## License / ownership
 
-Built as a portfolio / sellable SaaS starter for clinic and hospital operations.
+Built as a portfolio and sellable SaaS starter for clinic and hospital operations.

@@ -5,69 +5,100 @@
 <div class="bg-atmosphere"></div>
 <div class="app-shell">
   <div th:replace="~{fragments :: sidebar}"></div>
-  <main class="app-main">
-    <div class="app-top">
-      <div>
-        <button class="mobile-toggle" type="button" onclick="document.getElementById('sidebar').classList.toggle('open')">Menu</button>
-        <h1>Good care starts here</h1>
-        <p th:text="'Welcome, ' + ${currentUser.fullName} + ' · ' + ${currentUser.companyName}">Welcome</p>
+  <div class="app-column">
+    <div th:replace="~{fragments :: topbar}"></div>
+    <main class="app-main">
+      <div class="app-top">
+        <div>
+          <h1 th:text="'Welcome back, ' + ${#strings.arraySplit(currentUser.fullName,' ')[0]}">Welcome back</h1>
+          <p th:text="${currentUser.companyName} + ' · today’s clinic overview'">Clinic overview</p>
+        </div>
+        <a class="btn btn-primary btn-sm" th:href="@{/app/appointments}">Book appointment</a>
       </div>
-      <a class="btn btn-primary btn-sm" th:href="@{/app/appointments}">Book appointment</a>
-    </div>
 
-    <div class="welcome-note">
-      <p><strong>Today’s focus:</strong> keep the waiting room calm — check in arrivals, free occupied rooms, and clear overdue bills.</p>
-    </div>
+      <div th:if="${message}" class="alert alert-ok" th:text="${message}"></div>
 
-    <div th:if="${message}" class="alert alert-ok" th:text="${message}"></div>
-
-    <div class="stat-row">
-      <div class="stat"><div class="label">Today’s visits</div><div class="value" th:text="${todayAppointments}">0</div></div>
-      <div class="stat"><div class="label">Patients</div><div class="value" th:text="${patientCount}">0</div></div>
-      <div class="stat"><div class="label">Available rooms</div><div class="value" th:text="${availableRooms}">0</div></div>
-      <div class="stat"><div class="label">Outstanding</div><div class="value" th:text="'$' + ${#numbers.formatDecimal(outstandingTotal, 1, 0)}">$0</div></div>
-    </div>
-
-    <div class="grid-2">
-      <section class="panel">
-        <div class="panel-head"><h2>Recent appointments</h2><a th:href="@{/app/appointments}">View all</a></div>
-        <div class="panel-body">
-          <table>
-            <thead><tr><th>Patient</th><th>Doctor</th><th>When</th><th>Status</th></tr></thead>
-            <tbody>
-              <tr th:each="a : ${recentAppointments}">
-                <td th:text="${a.patient != null ? a.patient.fullName : '—'}">Patient</td>
-                <td th:text="${a.doctor != null ? a.doctor.fullName : '—'}">Doctor</td>
-                <td th:text="${a.appointmentDate + ' ' + a.appointmentTime}">When</td>
-                <td><span class="badge" th:classappend="' badge-' + ${#strings.toLowerCase(a.status)}" th:text="${#strings.replace(a.status, '_', ' ')}">Scheduled</span></td>
-              </tr>
-            </tbody>
-          </table>
-          <p class="empty" th:if="${#lists.isEmpty(recentAppointments)}">No appointments yet.</p>
-        </div>
-      </section>
-      <section class="panel">
-        <div class="panel-head"><h2>Care pulse</h2><a th:href="@{/app/patients}">Patients</a></div>
-        <div class="panel-body">
-          <div class="stat-row" style="grid-template-columns:repeat(3,1fr);margin:0 0 1rem">
-            <div class="stat"><div class="label">Scheduled</div><div class="value" th:text="${scheduledCount}">0</div></div>
-            <div class="stat"><div class="label">Checked in</div><div class="value" th:text="${checkedInCount}">0</div></div>
-            <div class="stat"><div class="label">Completed</div><div class="value" th:text="${completedCount}">0</div></div>
+      <div class="dash-grid">
+        <section class="dash-highlight">
+          <div>
+            <p class="eyebrow">Today’s appointments</p>
+            <h2 th:text="${todayAppointments}">0</h2>
+            <p>Keep the waiting room calm — check in arrivals and free occupied rooms.</p>
           </div>
-          <table>
-            <thead><tr><th>Patient</th><th>Age</th><th>Status</th></tr></thead>
-            <tbody>
-              <tr th:each="p : ${recentPatients}">
-                <td th:text="${p.fullName}">Name</td>
-                <td th:text="${p.age}">0</td>
-                <td><span class="badge" th:classappend="' badge-' + ${#strings.toLowerCase(p.status)}" th:text="${#strings.replace(p.status, '_', ' ')}">Active</span></td>
-              </tr>
-            </tbody>
-          </table>
+          <div class="dash-highlight-actions">
+            <a class="btn btn-primary btn-sm" th:href="@{/app/appointments}">View schedule</a>
+            <a class="btn btn-ghost btn-sm" th:href="@{/app/patients}">Patients</a>
+          </div>
+        </section>
+        <section class="pulse-card">
+          <h2>Care pulse</h2>
+          <div class="pulse-bars">
+            <div class="pulse-bar" th:classappend="${scheduledCount >= checkedInCount and scheduledCount >= completedCount} ? ' is-hot'">
+              <div class="bar" th:style="'height:' + ${(scheduledCount == 0 and checkedInCount == 0 and completedCount == 0) ? 36 : (28 + (scheduledCount * 14))} + 'px'"></div>
+              <div class="num" th:text="${scheduledCount}">0</div>
+              <div class="lbl">Scheduled</div>
+            </div>
+            <div class="pulse-bar" th:classappend="${checkedInCount > scheduledCount and checkedInCount >= completedCount} ? ' is-hot'">
+              <div class="bar" th:style="'height:' + ${(scheduledCount == 0 and checkedInCount == 0 and completedCount == 0) ? 48 : (28 + (checkedInCount * 14))} + 'px'"></div>
+              <div class="num" th:text="${checkedInCount}">0</div>
+              <div class="lbl">Checked in</div>
+            </div>
+            <div class="pulse-bar" th:classappend="${completedCount > scheduledCount and completedCount > checkedInCount} ? ' is-hot'">
+              <div class="bar" th:style="'height:' + ${(scheduledCount == 0 and checkedInCount == 0 and completedCount == 0) ? 64 : (28 + (completedCount * 14))} + 'px'"></div>
+              <div class="num" th:text="${completedCount}">0</div>
+              <div class="lbl">Completed</div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="stat-row">
+        <div class="stat"><div class="label">Patients</div><div class="value" th:text="${patientCount}">0</div></div>
+        <div class="stat"><div class="label">Available rooms</div><div class="value" th:text="${availableRooms}">0</div></div>
+        <div class="stat stat-accent">
+          <div class="label">Outstanding</div>
+          <div class="value" th:text="'RM ' + ${#numbers.formatDecimal(outstandingTotal, 1, 0)}">RM 0</div>
+          <div class="stat-sub">Billing balance</div>
         </div>
-      </section>
-    </div>
-  </main>
+        <div class="stat"><div class="label">Visits today</div><div class="value" th:text="${todayAppointments}">0</div></div>
+      </div>
+
+      <div class="grid-2">
+        <section class="panel">
+          <div class="panel-head"><h2>Recent appointments</h2><a th:href="@{/app/appointments}">View all</a></div>
+          <div class="panel-body">
+            <table>
+              <thead><tr><th>Patient</th><th>Doctor</th><th>When</th><th>Status</th></tr></thead>
+              <tbody>
+                <tr th:each="a : ${recentAppointments}">
+                  <td th:text="${a.patient != null ? a.patient.fullName : '—'}">Patient</td>
+                  <td th:text="${a.doctor != null ? a.doctor.fullName : '—'}">Doctor</td>
+                  <td th:text="${a.appointmentDate + ' ' + a.appointmentTime}">When</td>
+                  <td><span class="badge" th:classappend="' badge-' + ${#strings.toLowerCase(a.status)}" th:text="${#strings.replace(a.status, '_', ' ')}">Scheduled</span></td>
+                </tr>
+              </tbody>
+            </table>
+            <p class="empty" th:if="${#lists.isEmpty(recentAppointments)}">No appointments yet.</p>
+          </div>
+        </section>
+        <section class="panel">
+          <div class="panel-head"><h2>Recent patients</h2><a th:href="@{/app/patients}">Open list</a></div>
+          <div class="panel-body">
+            <table>
+              <thead><tr><th>Patient</th><th>Age</th><th>Status</th></tr></thead>
+              <tbody>
+                <tr th:each="p : ${recentPatients}">
+                  <td th:text="${p.fullName}">Name</td>
+                  <td th:text="${p.age}">0</td>
+                  <td><span class="badge" th:classappend="' badge-' + ${#strings.toLowerCase(p.status)}" th:text="${#strings.replace(p.status, '_', ' ')}">Active</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
 </div>
 </body>
 </html>

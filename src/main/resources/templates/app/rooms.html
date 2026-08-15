@@ -5,10 +5,11 @@
 <div class="bg-atmosphere"></div>
 <div class="app-shell">
   <div th:replace="~{fragments :: sidebar}"></div>
-  <main class="app-main">
+  <div class="app-column">
+    <div th:replace="~{fragments :: topbar}"></div>
+    <main class="app-main">
     <div class="app-top">
       <div>
-        <button class="mobile-toggle" type="button" onclick="document.getElementById('sidebar').classList.toggle('open')">Menu</button>
         <h1>Rooms</h1>
         <p>Consultation rooms, wards, and lab spaces.</p>
       </div>
@@ -18,7 +19,7 @@
       <div class="panel-head"><h2>Add room</h2></div>
       <div class="panel-body">
         <form class="form-inline" th:action="@{/app/rooms}" method="post">
-          <div class="field"><label>Name</label><input name="name" required placeholder="Consult 1"/></div>
+          <div class="field"><label>Name</label><input name="name" required placeholder="Bilik Rundingan 1"/></div>
           <div class="field"><label>Type</label>
             <select name="type">
               <option value="CONSULTATION">Consultation</option>
@@ -72,6 +73,7 @@
       </div>
     </section>
   </main>
+  </div>
 </div>
 </body>
 </html>

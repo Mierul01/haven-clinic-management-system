@@ -5,10 +5,11 @@
 <div class="bg-atmosphere"></div>
 <div class="app-shell">
   <div th:replace="~{fragments :: sidebar}"></div>
-  <main class="app-main">
+  <div class="app-column">
+    <div th:replace="~{fragments :: topbar}"></div>
+    <main class="app-main">
     <div class="app-top">
       <div>
-        <button class="mobile-toggle" type="button" onclick="document.getElementById('sidebar').classList.toggle('open')">Menu</button>
         <h1>Reports</h1>
         <p>A soft snapshot of clinic activity.</p>
       </div>
@@ -37,13 +38,14 @@
           <table>
             <tr><td>Available rooms</td><td th:text="${availableRooms}">0</td></tr>
             <tr><td>Occupied rooms</td><td th:text="${occupiedRooms}">0</td></tr>
-            <tr><td>Paid billing</td><td th:text="'$' + ${paidTotal}">$0</td></tr>
-            <tr><td>Outstanding</td><td th:text="'$' + ${outstandingTotal}">$0</td></tr>
+            <tr><td>Paid billing</td><td th:text="'RM ' + ${paidTotal}">RM 0</td></tr>
+            <tr><td>Outstanding</td><td th:text="'RM ' + ${outstandingTotal}">RM 0</td></tr>
           </table>
         </div>
       </section>
     </div>
   </main>
+  </div>
 </div>
 </body>
 </html>

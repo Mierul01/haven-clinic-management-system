@@ -5,10 +5,11 @@
 <div class="bg-atmosphere"></div>
 <div class="app-shell">
   <div th:replace="~{fragments :: sidebar}"></div>
-  <main class="app-main">
+  <div class="app-column">
+    <div th:replace="~{fragments :: topbar}"></div>
+    <main class="app-main">
     <div class="app-top">
       <div>
-        <button class="mobile-toggle" type="button" onclick="document.getElementById('sidebar').classList.toggle('open')">Menu</button>
         <h1>Doctors</h1>
         <p>Your care team.</p>
       </div>
@@ -18,8 +19,8 @@
       <div class="panel-head"><h2>Add doctor</h2></div>
       <div class="panel-body">
         <form class="form-inline" th:action="@{/app/doctors}" method="post">
-          <div class="field"><label>Full name</label><input name="fullName" required placeholder="Dr. Name"/></div>
-          <div class="field"><label>Specialty</label><input name="specialty" required placeholder="General Practice"/></div>
+          <div class="field"><label>Full name</label><input name="fullName" required placeholder="Dr. Ahmad Faizal"/></div>
+          <div class="field"><label>Specialty</label><input name="specialty" required placeholder="Pengamal Perubatan Am"/></div>
           <div class="field"><label>Phone</label><input name="phone"/></div>
           <div class="field"><label>Email</label><input name="email" type="email"/></div>
           <div class="field"><label>Status</label>
@@ -56,6 +57,7 @@
       </div>
     </section>
   </main>
+  </div>
 </div>
 </body>
 </html>

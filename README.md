@@ -27,7 +27,7 @@ This is the clinic workspace after login. The layout is built around a calm fore
 | **Recent appointments** | Latest visits with patient, doctor, time, and status badges |
 | **Recent patients** | Newest people under care, with age and status |
 
-The screenshot above is the live demo clinic using seeded sample data. After this update, the demo clinic is **Klinik Haven Kajang** with Malaysian patient and doctor names.
+The screenshot above is the live demo: **Klinik Haven Kajang**, Malaysian patient and doctor names, and billing in **RM**.
 
 ---
 
